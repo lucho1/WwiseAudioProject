@@ -28,6 +28,8 @@ public class Weapon : MonoBehaviour, IInteractable
     public bool equipped = false;
     public bool playerWeapon = false;
 
+  
+
     [Header("Weapon Objects")]
     public GameObject prefab;
     public Collider hitbox;
@@ -167,7 +169,7 @@ public class Weapon : MonoBehaviour, IInteractable
                 if (currentAnimation.IsName("Player_RightSwing"))
                 {
                     attack.swingType = SwingTypes.Right;
-                    WeaponCombo1.SetValue();
+                   WeaponCombo1.SetValue();
                 }
                 else if (currentAnimation.IsName("Player_LeftSwing"))
                 {
@@ -184,6 +186,7 @@ public class Weapon : MonoBehaviour, IInteractable
                 {
                     //get material of the contact point
                     SoundMaterial sm = col.gameObject.GetComponent<SoundMaterial>();
+                  
                     if (sm != null) {
 
                         uint thisSwitch = 0;
@@ -235,7 +238,9 @@ public class Weapon : MonoBehaviour, IInteractable
         //print("Impact");
         //WeaponTypeSwitch.SetValue(transform.parent.gameObject); // Weapon Type
         alreadyHitObjects.Add(HitObj);
-        WeaponImpact.Post(transform.parent.gameObject);
+        AdventuressAnimationEventHandler weaponsound = PlayerManager.Instance.player.GetComponent<AdventuressAnimationEventHandler>();
+
+      
 
     }
 

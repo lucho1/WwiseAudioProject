@@ -9,6 +9,11 @@ using System.Collections;
 
 public class AdventuressAnimationEventHandler : MonoBehaviour
 {
+
+    public AudioClip FootStepOne;
+    public AudioClip FootStepTwo;
+
+
     [Header("Wwise")]
     public AK.Wwise.Event Swing = new AK.Wwise.Event();
     public AK.Wwise.Event GetItem = new AK.Wwise.Event();
@@ -24,11 +29,25 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
     private PlayerFoot foot_L;
     private PlayerFoot foot_R;
 
+    AudioSource audioSource;
+
     #region private variables
     private bool hasPausedMovement;
     private readonly int canShootMagicHash = Animator.StringToHash("CanShootMagic");
     private readonly int isAttackingHash = Animator.StringToHash("IsAttacking");
     #endregion
+
+
+    [Header("Weapon Sounds")]
+    public AudioClip[] daggersounds;
+    public AudioClip[] swordsounds;
+    public AudioClip[] hammersounds;
+    public AudioClip[] pickaxesounds;
+    public AudioClip[] axesounds;
+    public AudioClip[] firstattack;
+    public AudioClip[] secondattack;
+    public AudioClip[] thirdattack;
+
 
     private void Awake()
     {
@@ -49,6 +68,8 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
         {
             print("Right foot missing");
         }
+        audioSource = GetComponent<AudioSource>();
+
     }
 
 
@@ -82,23 +103,22 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
             if (!PlayerManager.Instance.inAir && !onCooldown)
             {
                 Vector3 particlePosition;
-
-                if (side == FootSide.left )
+                if (side == FootSide.left)
                 {
-                    if (foot_L.FootstepSound.Validate())
-                    { 
-                        foot_L.PlayFootstepSound();
+                    {
                         particlePosition = foot_L.transform.position;
                         FootstepParticles(particlePosition);
+                        audioSource.PlayOneShot(FootStepOne, 0.7F);
                     }
                 }
                 else
                 {
-                    if (foot_R.FootstepSound.Validate())
+                  
                     {
-                        foot_R.PlayFootstepSound();
+
                         particlePosition = foot_R.transform.position;
                         FootstepParticles(particlePosition);
+                        audioSource.PlayOneShot(FootStepTwo, 0.7F);
                     }
                 }
             }
@@ -186,5 +206,37 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
     {
         Weapon EquippedWeapon = PlayerManager.Instance.equippedWeaponInfo;
         EquippedWeapon.WeaponImpact.Post(EquippedWeapon.transform.parent.gameObject);
+    }
+
+    public void WeaponSound(int material)
+    {
+        Weapon EquippedWeapon = PlayerManager.Instance.equippedWeaponInfo;
+
+        if (EquippedWeapon.weaponType == WeaponTypes.Dagger)
+        {
+            if (daggersounds[material] != null)
+                audioSource.PlayOneShot(daggersounds[material], 0.7F);
+        }
+        if (EquippedWeapon.weaponType == WeaponTypes.Sword)
+        {
+            if (swordsounds[material] != null)
+                audioSource.PlayOneShot(swordsounds[material], 0.7F);
+        }
+        if (EquippedWeapon.weaponType == WeaponTypes.Axe)
+        {
+            if (axesounds[material] != null)
+                audioSource.PlayOneShot(axesounds[material], 0.7F);
+        }
+        if (EquippedWeapon.weaponType == WeaponTypes.Hammer)
+        {
+            if (hammersounds[material] != null)
+                audioSource.PlayOneShot(hammersounds[material], 0.7F);
+        }
+        if (EquippedWeapon.weaponType == WeaponTypes.PickAxe)
+        {
+            if (pickaxesounds[material] != null)
+                audioSource.PlayOneShot(pickaxesounds[material], 0.7F);
+        }
+        // HINT: This is a good place to play equipped weapon impact sound
     }
 }
