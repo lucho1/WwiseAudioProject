@@ -60,6 +60,13 @@ public class Inventory : MonoBehaviour
     public AK.Wwise.Event InventoryClosedSound;
     public AK.Wwise.Event InventorySelectSound;
 
+    #region audios
+    public AudioClip open_inventory_audio;
+    public AudioClip close_inventory_audio;
+    public AudioClip select_item_audio;
+    private AudioSource audiosource;
+    #endregion
+
     #region private variables
     private bool hasShown = false;
     private int SelectIncrementor_Row1 = 0;
@@ -118,6 +125,8 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < 3; i++) { CanPressLefts.Add(false); }
         for (int i = 0; i < 3; i++) { CanPressRights.Add(false); }
+
+        audiosource = PlayerManager.Instance.player.GetComponent<AudioSource>();
     }
 
     void MoveInventoryObjects(List<GameObject> Positions, List<GameObject> invRef, int incre, List<GameObject> StoreSpawns)
@@ -712,6 +721,7 @@ public class Inventory : MonoBehaviour
         {
             canvasGroup.interactable = true;
             InventoryOpenedSound.Post(gameObject);
+            audiosource.PlayOneShot(open_inventory_audio);
             InventoryIsOut = true;
             if (EventSystem.current != null)
             {
@@ -790,6 +800,7 @@ public class Inventory : MonoBehaviour
     public void ButtonIncrement(int layer)
     {
         InventorySelectSound.Post(gameObject);
+        audiosource.PlayOneShot(select_item_audio);
 
         if (Panel.activeInHierarchy && hasShown)
         {
@@ -814,6 +825,7 @@ public class Inventory : MonoBehaviour
     public void InversedIncrement(int layer)
     {
         InventorySelectSound.Post(gameObject);
+        audiosource.PlayOneShot(select_item_audio);
         if (Panel.activeInHierarchy && hasShown)
         {
             if (layer == 0)
