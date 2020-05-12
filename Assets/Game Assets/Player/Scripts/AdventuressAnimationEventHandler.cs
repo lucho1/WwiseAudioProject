@@ -163,6 +163,21 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
         Weapon W = PlayerManager.Instance.equippedWeaponInfo;
         W.WeaponTypeSwitch.SetValue(PlayerManager.Instance.weaponSlot);
         Swing.Post(PlayerManager.Instance.weaponSlot);
+
+        AnimatorStateInfo currentAnimation = PlayerManager.Instance.playerAnimator.GetCurrentAnimatorStateInfo(0);
+        if (currentAnimation.IsName("Player_RightSwing"))
+        {
+            audioSource.PlayOneShot(firstattack[Random.Range(0, 3)], 0.75f);
+        }
+        else if (currentAnimation.IsName("Player_LeftSwing"))
+        {
+            audioSource.PlayOneShot(secondattack[Random.Range(0, 3)], 0.75f);
+        }
+        else if (currentAnimation.IsName("Player_TopSwing"))
+        {
+            audioSource.PlayOneShot(thirdattack[Random.Range(0, 3)], 0.75f);
+
+        }
     }
 
     public void PauseMovement()
@@ -206,6 +221,7 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
     {
         Weapon EquippedWeapon = PlayerManager.Instance.equippedWeaponInfo;
         EquippedWeapon.WeaponImpact.Post(EquippedWeapon.transform.parent.gameObject);
+
     }
 
     public void WeaponSound(int material)
@@ -237,6 +253,6 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
             if (pickaxesounds[material] != null)
                 audioSource.PlayOneShot(pickaxesounds[material], 0.7F);
         }
-        // HINT: This is a good place to play equipped weapon impact sound
+        
     }
 }

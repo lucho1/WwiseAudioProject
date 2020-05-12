@@ -29,9 +29,12 @@ public class WorldTeleporter : MonoBehaviour
 
     private UnityAction<int> teleport;
 
+    private AudioSource TeleportSound;
+
     private void Awake()
     {
         LanguageManager.OnLanguageChange += ConfigureTeleportLocations;
+        TeleportSound = this.gameObject.GetComponent<AudioSource>();
     }
 
     private void OnDestroy()
@@ -77,6 +80,7 @@ public class WorldTeleporter : MonoBehaviour
 
         if (dropdown.value != 0)
         {
+            TeleportSound.Play();
             PlayerManager.Instance.player.transform.position = destinations[dropdown.value - 1].transform.position;
             TeleportSelectSound.Post(PlayerManager.Instance.player);
             dropdown.value = 0;

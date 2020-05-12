@@ -186,7 +186,7 @@ public class Weapon : MonoBehaviour, IInteractable
                 {
                     //get material of the contact point
                     SoundMaterial sm = col.gameObject.GetComponent<SoundMaterial>();
-                  
+                  //sounds
                     if (sm != null) {
 
                         uint thisSwitch = 0;

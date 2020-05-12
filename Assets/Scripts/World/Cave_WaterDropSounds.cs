@@ -54,7 +54,7 @@ public class Cave_WaterDropSounds : MonoBehaviour
                     if (drop.GetComponent<AkGameObj>() == null) {
                         drop.AddComponent<AkGameObj>();
                     }
-
+                    drop.gameObject.GetComponent<AudioSource>().Play();
                     waterDropSound.Post(drop);
                     Destroy(drop, 1.5f);
                 }

@@ -13,11 +13,20 @@ public class CoinPickup : MonoBehaviour {
 
     public bool playSpawnSoundAtSpawn = true;
     public AK.Wwise.Event spawnSound;
+    public AudioClip[] coinpicksound;
 
-	void Start(){
-        if (playSpawnSoundAtSpawn){
-            spawnSound.Post(gameObject);
+    void Start(){
+
+        AudioSource audioSource = PlayerManager.Instance.player.GetComponent<AudioSource>();
+        if (playSpawnSoundAtSpawn)
+        {
+            // HINT: You might want to play the Coin pickup sound here
+            audioSource.PlayOneShot(coinpicksound[0], 0.75f);
         }
+
+        //if (playSpawnSoundAtSpawn){
+        //    spawnSound.Post(gameObject);
+        //}
 	}
 
 	public void AddCoinToCoinHandler(){
