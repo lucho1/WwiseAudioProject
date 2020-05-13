@@ -13,6 +13,8 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
     public AudioClip FootStepOne;
     public AudioClip FootStepTwo;
 
+    [Header("Pickup Sounds")]
+    public AudioClip[] pickupsounds;
 
     [Header("Wwise")]
     public AK.Wwise.Event Swing = new AK.Wwise.Event();
@@ -215,6 +217,12 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
         PlayerManager.Instance.PickUpEvent();
         GetItem.Post(this.gameObject);
         GetItemStinger.Post(GameManager.Instance.MusicGameObject);
+    }
+
+    public void PickUpItem(int itemtype)
+    {
+        PlayerManager.Instance.PickUpEvent();
+        audioSource.PlayOneShot(pickupsounds[itemtype]);
     }
 
     public void WeaponSound()

@@ -31,6 +31,8 @@ public class Pickup : MonoBehaviour, IInteractable
 	[Space(15f)]
 	public AK.Wwise.Switch PickupType;
 
+    public int Pickuptype = 0;
+
 	#region private variables
 	private float randomOffset;
 	private bool playerInTrigger;
@@ -191,8 +193,8 @@ public class Pickup : MonoBehaviour, IInteractable
 
 			if (interactionSound)
 			{
-				
-				PickUpEvent.Post(gameObject);
+                PlayerManager.Instance.player.GetComponent<AdventuressAnimationEventHandler>().PickUpItem(Pickuptype);
+                PickUpEvent.Post(gameObject);
 			}
 			if (pickupParticles != null)
 			{
