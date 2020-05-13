@@ -65,11 +65,16 @@ public class WwizardAI : Creature
 
     public void StartCharging()
     {
+
+        GameObject.Find("WizardAudio").GetComponent<WwizardAudio>().playOnChargeBegin = true;
         chargeParticles.enabled = true;
     }
 
     public void DoneCharging()
     {
+
+        GameObject.Find("WizardAudio").GetComponent<WwizardAudio>().playOnChargeEnd = true;
+
         chargeParticles.enabled = false;
     }
 
