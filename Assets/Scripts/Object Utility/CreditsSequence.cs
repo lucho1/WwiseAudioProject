@@ -112,6 +112,7 @@ public class CreditsSequence : MonoBehaviour
 
     public void SkipCredits()
     {
+        GameObject.Find("CreditMusicMannager").GetComponent<CreditsMusic>().playFadeOut = true;
         canvAnim.speed = 5f;
         canvAnim.SetTrigger(fadeOutHash);
     }
