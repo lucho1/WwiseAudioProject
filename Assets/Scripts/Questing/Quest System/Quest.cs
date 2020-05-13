@@ -228,7 +228,6 @@ namespace QuestSystem
             else
             {
             OnQuestUpdated.Invoke();
-
             }
         }
 
