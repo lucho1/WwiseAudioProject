@@ -214,7 +214,6 @@ namespace QuestSystem
         private void UpdateQuestProgress(QuestObjective objective)
         {
             progress++;
-            OnQuestUpdated.Invoke();
             objective.OnComplete -= UpdateQuestProgress;
 
             if (OnQuestStatusUpdated != null)
@@ -225,6 +224,11 @@ namespace QuestSystem
             if (progress == Objectives.Count)
             {
                 CompleteQuest();
+            }
+            else
+            {
+            OnQuestUpdated.Invoke();
+
             }
         }
 
