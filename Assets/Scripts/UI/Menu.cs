@@ -27,6 +27,13 @@ public class Menu : MonoBehaviour
 
     public MenuEvent OnMenuDown;
 
+    #region audios
+    [Header("Audio clips")]
+    public AudioClip open_menu_audio;
+    public AudioClip close_menu_audio;
+    private AudioSource audiosource;
+    #endregion
+
     private bool menuOpen = false;
 
     public void Update()
@@ -39,6 +46,7 @@ public class Menu : MonoBehaviour
     private void OnEnable()
     {
         InputManager.OnMenuDown += ToggleMenu;
+        audiosource = PlayerManager.Instance.player.GetComponent<AudioSource>();
     }
 
     private void OnDisable()
@@ -54,6 +62,8 @@ public class Menu : MonoBehaviour
             isOpen = menuOpen;
             if (menuOpen)
             {
+                audiosource.PlayOneShot(open_menu_audio);
+
                 MenuOpenSound.Post(gameObject);
                 MenuRTPC.SetGlobalValue(100f);
                 GameManager.Instance.gameSpeedHandler.PauseGameSpeed(gameObject.GetInstanceID());
@@ -67,6 +77,9 @@ public class Menu : MonoBehaviour
             }
             else
             {
+
+                audiosource.PlayOneShot(close_menu_audio);
+
                 MenuCloseSound.Post(gameObject);
                 MenuRTPC.SetGlobalValue(0f);
                 GameManager.Instance.gameSpeedHandler.UnPauseGameSpeed(gameObject.GetInstanceID());

@@ -39,6 +39,7 @@ namespace QuestSystem
         public UnityEvent OnQuestStarted;
         public UnityEvent OnDialogueStart;
         public UnityEvent OnDialogueComplete;
+        public UnityEvent OnQuestUpdated;
         public UnityEvent OnQuestCompleted;
 
         #region private variables
@@ -46,6 +47,10 @@ namespace QuestSystem
 
         private bool subscribedToDialogueCallback = false;
         #endregion
+
+        private void Start()
+        {
+        }
 
         public Coroutine InitializeQuest()
         {
@@ -209,7 +214,7 @@ namespace QuestSystem
         private void UpdateQuestProgress(QuestObjective objective)
         {
             progress++;
-
+            OnQuestUpdated.Invoke();
             objective.OnComplete -= UpdateQuestProgress;
 
             if (OnQuestStatusUpdated != null)

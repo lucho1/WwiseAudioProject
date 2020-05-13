@@ -26,19 +26,34 @@ namespace QuestSystem
         public bool StartQuestLineOnStart = true;
         public List<Quest> Quests;
 
+        #region quest audios
+        [Header("Quest audio clips")]
+        public AudioClip quest_completeCollection_01;
+        public AudioClip quest_completeCollection_02;
+        public AudioClip quest_questRoll_open;
+        public AudioClip quest_questRoll_close;
+        private AudioSource audiosource;
+        #endregion
+
         #region private variables
         private int currentQuestIdx = 0;
         private bool initializingNewQuest = false;
 
         private IEnumerator interactionRoutine;
         #endregion
-
+        
         private void Start()
         {
             if (StartQuestLineOnStart)
             {
                 InitializeQuest(currentQuestIdx);
             }
+            audiosource = PlayerManager.Instance.player.GetComponent<AudioSource>();
+        }
+
+        public void PlayQuestUpdatedSound()
+        {
+            audiosource.PlayOneShot(quest_completeCollection_01);
         }
 
         private Coroutine InitializeQuest(int questIdx)
@@ -48,7 +63,6 @@ namespace QuestSystem
 
         private IEnumerator QuestInit(int questIdx)
         {
-
             Quest currentQuest = Quests[questIdx];
             yield return currentQuest.InitializeQuest();
             currentQuest.OnQuestComplete += AdvanceQuestLine;
@@ -61,6 +75,7 @@ namespace QuestSystem
 
             QuestlineProgressionRTPC.SetGlobalValue(GetNormalizedQuestlineProgress() * 100f);
             initializingNewQuest = false;
+            
         }
 
         public Quest GetCurrentQuest()
@@ -82,16 +97,20 @@ namespace QuestSystem
             {
                 OnQuestCompleted(quest);
             }
-
+           
             currentQuestIdx++;
             if (currentQuestIdx < Quests.Count)
             {
                 QuestlineCompleteEvent.Post(gameObject);
                 InitializeQuest(currentQuestIdx);
+
+                audiosource.PlayOneShot(quest_completeCollection_02);
             }
             else
             {
+              
                 QuestlineCompleteEvent.Post(gameObject);
+
                 if (OnQuestlineComplete != null)
                 {
                     OnQuestlineComplete(this);
@@ -101,6 +120,7 @@ namespace QuestSystem
 
         public void SetQuestLineProgress(int targetQuestIdx)
         {
+            
             if (currentQuestIdx != targetQuestIdx)
             {
                 StartCoroutine(ForcedQuestlineAdvance(targetQuestIdx));
@@ -113,6 +133,7 @@ namespace QuestSystem
 
         private IEnumerator ForcedQuestlineAdvance(int targetQuestIdx)
         {
+            
             if (OnQuestlineForcedChangeStarted != null)
             {
                 OnQuestlineForcedChangeStarted(this);
@@ -126,6 +147,7 @@ namespace QuestSystem
                 {
                     yield return Quests[currentQuestIdx].ForceCompleteQuest();
                     i = currentQuestIdx;
+
                     //yield return Quests[i].ForceCompleteQuest();
                 }
                 else            //Moving backwards in the questline

@@ -54,9 +54,20 @@ public class QuestManager : Singleton<QuestManager>
 
     public bool showQuestBarInfo = false;
 
+    #region quest audios
+    [Header("Quest audio clips")]
+    public AudioClip quest_completeCollection_01;
+    public AudioClip quest_completeCollection_02;
+    public AudioClip quest_questRoll_open;
+    public AudioClip quest_questRoll_close;
+    private AudioSource audiosource;
+    #endregion
+
     void Awake()
     {
         QuestItems = new List<QuestItemInfo>();
+
+        audiosource = PlayerManager.Instance.player.GetComponent<AudioSource>();
     }
 
     public static void PushQuestBarUpdate()

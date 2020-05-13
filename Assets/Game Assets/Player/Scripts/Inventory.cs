@@ -749,6 +749,8 @@ public class Inventory : MonoBehaviour
 
             Panel.SetActive(false);
 
+            audiosource.PlayOneShot(close_inventory_audio);
+
             InputManager.OnRightArrowDown -= ArrowPressRight;
             InputManager.OnLeftArrowDown -= ArrowPressLeft;
 
