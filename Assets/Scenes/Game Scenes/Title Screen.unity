@@ -4715,7 +4715,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 410488144}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d26b7b432ed5eab44845a1e4f32d79b7, type: 3}
+  m_Script: {fileID: 11500000, guid: b1b89521465661c4384b43e253f60102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LoopClip: {fileID: 8300000, guid: 28b30ad23e4fef14481b821ef8b48f84, type: 3}
