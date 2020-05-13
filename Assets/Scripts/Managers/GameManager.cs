@@ -78,6 +78,11 @@ public class GameManager : Singleton<GameManager>
     [Header("MODES")]
     public bool DisableWwizardMagicStateOnStart = true;
 
+ 
+  
+
+
+
     /// <summary>
     /// Used with dynamic bools from UnityEvents on the UI
     /// </summary>
