@@ -41,12 +41,12 @@ public class MaterialChecker : MonoBehaviour
 
             if (sm != null)
             {
-                sm.material.SetValue(go);
+               // sm.material.SetValue(go);
             }
         }
     }
 
-    public AK.Wwise.Switch GetMaterial()
+    public int GetMaterial()
     {
         if (Physics.Raycast(trn.position + checkOffset, direction, out hit, layermask))
         {
@@ -57,7 +57,7 @@ public class MaterialChecker : MonoBehaviour
                 return sm.material;
             }
         }
-        return null;
+        return -1;
     }
 
 }

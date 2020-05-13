@@ -30,7 +30,7 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
     private PlayerFoot foot_R;
 
     AudioSource audioSource;
-
+    private int colMaterial= 0;
     #region private variables
     private bool hasPausedMovement;
     private readonly int canShootMagicHash = Animator.StringToHash("CanShootMagic");

@@ -28,7 +28,7 @@ public class Weapon : MonoBehaviour, IInteractable
     public bool equipped = false;
     public bool playerWeapon = false;
 
-  
+    private int hitmaterial = 0;
 
     [Header("Weapon Objects")]
     public GameObject prefab;
@@ -186,18 +186,19 @@ public class Weapon : MonoBehaviour, IInteractable
                 {
                     //get material of the contact point
                     SoundMaterial sm = col.gameObject.GetComponent<SoundMaterial>();
-                  //sounds
+                    //sounds 
+                    hitmaterial = sm.material;
                     if (sm != null) {
 
-                        uint thisSwitch = 0;
-                        AkSoundEngine.GetSwitch((uint)sm.material.GroupId, transform.parent.gameObject, out thisSwitch);
-                        //print("Current Switch: "+ thisSwitch +", New: "+ sm.material.ID);
+                        //uint thisSwitch = 0;
+                        //AkSoundEngine.GetSwitch((uint)sm.material.GroupId, transform.parent.gameObject, out thisSwitch);
+                        ////print("Current Switch: "+ thisSwitch +", New: "+ sm.material.ID);
 
-                        if (thisSwitch != (uint)sm.material.Id)
-                        {
-                            sm.material.SetValue(transform.parent.gameObject); // Set Impact Material
-                                                                               //print("New Impact Material: "+ sm.gameObject.name);
-                        }
+                        //if (thisSwitch != (uint)sm.material.Id)
+                        //{
+                        //    sm.material.SetValue(transform.parent.gameObject); // Set Impact Material
+                        //                                                       //print("New Impact Material: "+ sm.gameObject.name);
+                        //}
                     }
 
                     SetAndPlayWeaponImpact(col.gameObject);
@@ -240,7 +241,7 @@ public class Weapon : MonoBehaviour, IInteractable
         alreadyHitObjects.Add(HitObj);
         AdventuressAnimationEventHandler weaponsound = PlayerManager.Instance.player.GetComponent<AdventuressAnimationEventHandler>();
 
-      
+        weaponsound.WeaponSound(hitmaterial);
 
     }
 
