@@ -58,6 +58,7 @@ public class EvilSpitPlantAI : Creature
     {
         if (targetOfNPC != null && !GameManager.Instance.AIPaused)
         {
+            gameObject.GetComponent<EvilPlantSound>().playShoot = true;
             AttackSound.Post(this.gameObject);
 
             GameObject bullet = Instantiate(bulletPrefab, spitBulletSpawnPoint.transform.position, Quaternion.LookRotation(transform.forward)) as GameObject; //TODO: Pool spitbullets
@@ -71,6 +72,7 @@ public class EvilSpitPlantAI : Creature
 
     public void PlayChargeSound()
     {
+        //gameObject.GetComponent<EvilPlantSound>().playCharge = true;
         ChargeSound.Post(gameObject);
     }
 
@@ -81,6 +83,7 @@ public class EvilSpitPlantAI : Creature
     {
         if (chargeParticles != null)
         {
+            gameObject.GetComponent<EvilPlantSound>().playCharge = true;
             GameObject chargeFX = Instantiate(chargeParticles, spitBulletSpawnPoint.transform.position, Quaternion.identity, spitBulletSpawnPoint.transform) as GameObject; //TODO: Pool charge particles.
             Destroy(chargeFX, 5f);
         }
@@ -119,6 +122,7 @@ public class EvilSpitPlantAI : Creature
 
     public override void OnDeathAnimation()
     {
+        gameObject.GetComponent<EvilPlantSound>().playDeath = true;
         base.OnDeathAnimation();
 
         anim.SetBool(isAliveHash, false);
@@ -137,6 +141,7 @@ public class EvilSpitPlantAI : Creature
 
     public void OnDeathHeadFall()
     {
+        gameObject.GetComponent<EvilPlantSound>().playImpact = true;
         Death_Headfall.Post(this.gameObject);
     }
 }

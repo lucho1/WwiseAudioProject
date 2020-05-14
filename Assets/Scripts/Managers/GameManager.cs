@@ -53,6 +53,8 @@ public class GameManager : Singleton<GameManager>
         TimeOfDay = t;
     }
 
+    MenuSound menuSound;
+    InnerAmbienceScript bckgSound;
     public Vector2 DayAndNightChange;
     public bool dayTime = false;
     private bool lastDayTime = false;
@@ -113,6 +115,9 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
+        menuSound = GameObject.Find("AmbienceSound").GetComponent<MenuSound>();
+        bckgSound = GameObject.Find("InnerAmbienceLoop").GetComponent<InnerAmbienceScript>();
+
         if (DisableWwizardMagicStateOnStart) {
             AkSoundEngine.SetState("MagicZone", "Outside");
         }
@@ -131,7 +136,9 @@ public class GameManager : Singleton<GameManager>
 
     void Awake()
     {
-        
+        menuSound = GameObject.Find("AmbienceSound").GetComponent<MenuSound>();
+        bckgSound = GameObject.Find("InnerAmbienceLoop").GetComponent<InnerAmbienceScript>();
+
         ActiveCamera = Camera.main;
         if (ActiveCamera != null)
         {
@@ -156,14 +163,23 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
+        if(menuSound == null)
+            menuSound = GameObject.Find("AmbienceSound").GetComponent<MenuSound>();
+        if(bckgSound == null)
+            bckgSound = GameObject.Find("InnerAmbienceLoop").GetComponent<InnerAmbienceScript>();
+
         // ------------------------ DAY / NIGHT CYCLE
         if (TimeOfDay < DayAndNightChange.x || TimeOfDay > DayAndNightChange.y)
         {
             dayTime = false;
+            menuSound.playNight = true;
+            bckgSound.playNightLoop = true;
         }
         else if (TimeOfDay > DayAndNightChange.x && TimeOfDay < DayAndNightChange.y)
         {
             dayTime = true;
+            menuSound.playNight = false;
+            bckgSound.playNightLoop = false;
         }
 
         if (dayTime != lastDayTime)

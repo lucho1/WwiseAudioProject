@@ -137,6 +137,7 @@ public class EvilSpitPlantProjectile : MonoBehaviour
 
             if (hitSomething)
             {
+                gameObject.GetComponent<EvilPlantSound>().playImpact = true;
                 ImpactSound.Post(go.gameObject);
             }
             else

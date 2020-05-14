@@ -93,6 +93,7 @@ public class EvilHeadAI : Creature
     /// </summary>
     public void Charge()
     {
+        gameObject.GetComponent<EvilHeadSound>().playCharge = true;
         if (chargeRoutine != null)
         {
             StopCoroutine(chargeRoutine);
@@ -135,6 +136,7 @@ public class EvilHeadAI : Creature
 
     public override void OnDeathAnimation()
     {
+        gameObject.GetComponent<EvilHeadSound>().playDeath = true;
         base.OnDeathAnimation();
         isAlive = false;
 
@@ -189,6 +191,7 @@ public class EvilHeadAI : Creature
     /// </summary>
     public void PlayBiteSound()
     {
+        gameObject.GetComponent<EvilHeadSound>().playBite = true;
         BiteSound.Post(this.gameObject);
     }
 }
